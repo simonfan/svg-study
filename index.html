@@ -1,0 +1,148 @@
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+
+        body {
+            background-color: cyan;
+
+            margin: 0 0;
+        }
+
+        #item {
+            position: absolute;
+            top: 100px;
+            left: 80px;
+
+            background-color: navy;
+            color: white;
+        }
+
+        #spotlighter {
+            position: fixed;
+            z-index: 2;
+
+            top: 0;
+            left: 0;
+
+            height: 100%;
+            width: 100%;
+        }
+
+        #fixed {
+            position: fixed;
+            bottom: 70px;
+            right: 50px;
+
+            width: 100px;
+
+            z-index: 400;
+        }
+
+        #relative {
+            position: relative;
+            z-index: 400;
+
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="item">
+        lalala
+    </div>
+
+    <div id="fixed">
+        loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew 
+    </div>
+
+    <div id="normal">
+        lalala
+    </div>
+
+    <div id="relative">
+        loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew loqwemqw eqwe jhqwkejh kqjweh nqwhe qhwei qnwe hqwe hqwhe kqhew 
+    </div>
+
+    <svg
+        id="spotlighter" 
+        version="1.1"
+         baseProfile="full"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <mask id="mask-container">
+            <rect width="100%" height="100%" fill="white"/>
+
+            <g id="spotlight-container"><!-- 
+                <rect
+                    id="spotlight"
+                    fill="black"/> -->
+            </g>
+        </mask>
+
+        <rect
+            width="100%"
+            height="100%"
+            fill="rgba(0, 0, 0, 0.7)"
+            mask="url(#mask-container)"/>
+
+    </svg>
+
+
+
+    <script type="text/javascript">
+        var spotlighter = document.getElementById('spotlighter');
+        var spotlightContainer = document.getElementById('mask-container');
+
+        spotlighter.addEventListener('click', hideSpotlighter);
+
+        function hideSpotlighter() {
+            spotlighter.style.height = 0;
+        }
+
+        function showSpotlighter() {
+            spotlighter.style.height = '100%';
+        }
+
+        var margin = 10;
+
+        function createSpotlightMask(target) {
+            // create rect
+            var mask = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+
+            mask.setAttribute('fill', 'black');
+
+            // append to mask container
+            spotlightContainer.appendChild(mask);
+
+            var boundingRect = target.getBoundingClientRect();
+            mask.setAttribute('x', boundingRect.left - margin);
+            mask.setAttribute('y', boundingRect.top - margin);
+            mask.setAttribute('width', boundingRect.right - boundingRect.left + 2 * margin);
+            mask.setAttribute('height', boundingRect.bottom - boundingRect.top + 2 * margin);
+        }
+
+        function setSpotlight(target) {
+
+            console.log(target);
+
+        }
+
+        var divs = Array.prototype.slice.call(document.querySelectorAll('div'), 0);
+
+        // divs.forEach(function (div) {
+        //     div.addEventListener('click', setSpotlight.bind(null, div));
+        // });
+        
+        divs.forEach(function (div) {
+            createSpotlightMask(div);
+        });
+
+        showSpotlighter();
+        
+    </script>
+
+</body>
+</html>
